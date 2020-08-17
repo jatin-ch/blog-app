@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myblog</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+    <style type="text/css">
+      body{
+        background-color: #f8f8f8;
+        background-color: #fff;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-family: Montserrat;
+      }
+
+      p { line-height: 20px; font-weight: 400; color: rgba(0,0,0,.7); font-family: 'Helvetica Neue', sans-serif; font-size: 14px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+
+
+      .main-after-scroll{
+        padding-top: 60px;
+      }
+
+      ul li {
+        list-style: none;
+      }
+
+      .navbar {
+        width: 100%;
+        border-radius: 0;
+        z-index: 100;
+        background-color: #fff;
+        margin-bottom: 10px;
+      }
+      
+      .navbar-after-scroll {
+        -webkit-box-shadow: 0 8px 6px -6px #999;
+        -moz-box-shadow: 0 8px 6px -6px #999;
+        box-shadow: 0 8px 6px -6px #999;
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06), 0 4px 5px 0 rgba(0,0,0,0.06), 0 1px 10px 0 rgba(0,0,0,0.08);
+        position: fixed;
+      } 
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <%= render 'layouts/navbar'  %>
+
+    <div class="main">
+      <%= yield %>
+    </div>
+
+     <script type="text/javascript">
+       $(window).scroll(function() {
+      if ($(this).scrollTop() > 1){  
+        $('.navbar').addClass("navbar-after-scroll");
+        $('.main').addClass("main-after-scroll");
+      }
+      else {
+        $('.navbar').removeClass("navbar-after-scroll");
+        $('.main').removeClass("main-after-scroll");
+      }
+    });
+
+     </script>
+
+  </body>
+</html>
+

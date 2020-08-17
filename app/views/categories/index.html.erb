@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>Category List</strong>
+          <button class="pull-right btn btn-default btn-xs"><%= link_to "New", new_category_path %> </button>
+        </div>
+
+        <div class="panel-body">
+
+          <table class="table table-hover" style="border-collapse:separate; 
+  border-spacing: 0 1em;">
+            <tbody>
+              <% @categories.each do |category| %>
+              <tr id="card">
+                <td style="text-transform: uppercase;font-size: 20px;font-weight: 600;background-color: yellow;text-align: center;border-radius: 50%;width: 45px;border: none"><%= category.name[0] %></td>
+                <td style="border: none"><%= category.name %></td>
+                <td style="border: none"><%= link_to 'Show', category_path(category) %></td>
+                <td style="border: none"><%= link_to 'Edit', edit_category_path(category) %></td>
+                <td style="border: none"><%= link_to 'Delete', category_path(category),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <center><%= will_paginate @categories %></center>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

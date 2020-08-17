@@ -1,0 +1,11 @@
+<%#= javascript_pack_tag 'application' %>
+
+<%= react_component("HelloWorld", { greeting: "Hello", name: 'Manish', age: 22 }) %>
+
+<h1>
+	Hello Welcome to the landing page!
+</h1>
+
+<% if admin_signed_in? %>
+<h2>Admin <%= current_admin.email %> <%= link_to 'Logout', destroy_admin_session_path, method: :delete %></h2> 
+<% end %>

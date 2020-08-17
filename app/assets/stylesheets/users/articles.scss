@@ -1,0 +1,76 @@
+// Place all the styles related to the users/articles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.post-body {
+    padding: 0 10px;
+}
+
+.like-count{
+  width: 100%;
+  height: auto;
+  padding: 0px 0 0 10px;
+}
+.like-count p{
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(0,0,0,.6);
+  margin: 10px 0 0 0;
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Fira Sans,Ubuntu,Oxygen,Oxygen Sans,Cantarell,Droid Sans,Lucida Grande,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Emoji,Segoe UI Symbol,Hiragino Kaku Gothic Pro,Meiryo,Hiragino Sans GB W3,Noto Naskh Arabic,Droid Arabic Naskh,Geeza Pro,Simplified Arabic,Noto Sans Thai,Thonburi,Dokchampa,Droid Sans Thai,Droid Sans Fallback,'.SFNSDisplay-Regular',Heiti SC,Microsoft Yahei;
+}
+
+
+
+.dropbtn {
+    color: black;
+    cursor: pointer
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+	color: black; 
+	background-color: #ddd;
+  text-decoration: none;
+	}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.post-comment-box {
+  width: 100%;
+  height:auto;
+  background-color: #f3f6f8;
+  padding: 10px;
+  #display: none;
+}
+
+.post-comment-box ul {
+  padding: 10px 0;
+}
+
+.post-comment-box ul > li {
+  list-style: none;
+}

@@ -1,0 +1,33 @@
+<% @articles.each do |article| %>
+  <div class="post-container thumbnail">
+    <% if article.user.id == current_user.id %>
+      <div class="dropdown pull-right">
+        <i class="dropbtn fa fa-ellipsis-h fa-2x"></i>
+        <div class="dropdown-content">
+          <%= link_to 'Edit', edit_article_path(article) %>
+          <%= link_to 'Delete', article_path(article),
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %>
+        </div>
+      </div>
+    <% end %> 
+    <div class="post-body">
+      <h2 style="font-size: 20px"><%= link_to article.title, users_path(article) %>
+        <% if article.publish == true %>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Yes_Check_Circle.svg/120px-Yes_Check_Circle.svg.png" style="width:20px" />
+        <% end %>
+      </h2>
+      <p><%= truncate_html(article.text, :length => 225).html_safe %>
+        <% if article.text.length > 255 %>
+          <%= link_to 'read more', article_path(article) %>
+        <% end %>
+      </p>
+    </div>
+    <div class="like-count">
+      <p>
+        <span>50 Likes</span> .
+        <span><%= article.comments.count %> Comments</span>
+      </p>
+    </div>
+  </div>
+<% end %>

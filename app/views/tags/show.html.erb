@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <% @articles.each do |article| %>
+      <div class="col-md-6 col-md-offset-3">
+        <div class="post-container thumbnail">
+          <div class="top">
+            <div class="top-left">
+              <img class="img-circle" src="https://www.w3schools.com/howto/img_avatar.png" alt="" style="width:40px">
+            </div>
+            <div class="top-mid">
+              <a href="#"><%= article.user.name %></a><br>
+              <small><%= article.created_at %></small>
+            </div>
+
+             <% if article.user.id == current_user.id %>
+              <div class="dropdown pull-right">
+                <i class="dropbtn fa fa-ellipsis-h fa-2x"></i>
+                <div class="dropdown-content">
+                  <%= link_to 'Edit', edit_article_path(article) %>
+                  <%= link_to 'Delete', article_path(article),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %>
+                </div>
+              </div>
+            <% end %>
+            <br clear="all">
+          </div> 
+          <div class="post-body">
+            <h2 style="font-size: 20px"><%= link_to article.title, article_path(article) %></h2>
+            <p>
+              <%= full_sanitizer = Rails::Html::FullSanitizer.new
+                  truncate_html(full_sanitizer.sanitize(article.text), :length => 225) %>
+              <% if article.text.length > 255 %>
+                <%= link_to 'read more', article_path(article) %>
+              <% end %>
+            </p>
+          </div>
+          <div class="like-count">
+            <p>
+              <span>50 Likes</span> .
+              <span><%= article.comments.count %> Comments</span>
+              <span class="pull-right">Category: <%= link_to article.category.name, category_path(article.category) %></span>
+            </p>
+          </div>
+        </div>
+    </div>
+  <% end %>
+  </div>
+</div>
+ 

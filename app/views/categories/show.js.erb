@@ -1,0 +1,16 @@
+$(function(){
+      
+  var html = '';
+      html += '<% if @categories.count > 0 %>';
+      html += '<% @categories.each do |category| %>';
+      html +=  '<li style="list-style: circle">';
+      html +=  '<%= link_to category.name, category_path(category) %>';
+      html +=  '</li>';
+      html +=  '<% end %>';
+      html +=  '<% else %>';
+      html +=  '<p>No category found!</p>';
+      html +=  '<% end %>';
+
+  $('#category-search-results').html(html);
+
+});

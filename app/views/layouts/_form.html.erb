@@ -1,0 +1,33 @@
+<form action="<%= articles_path %>" method="get">
+<div class="input-group">
+	<div class="input-group-btn">
+	<%= select_tag(:category, options_for_select(Category.all.collect{ |u| [u.name, u.id] }, params[:category]), {:include_blank => 'ALL', :class => "input-group-addon article-category form-control"})  %> </div>
+    <%= text_field_tag :query, params[:query], class: 'form-control article-search', placeholder: 'Search Category, Article' %>
+    <div class="input-group-btn">
+      <%= submit_tag "Search", class: "btn", name: nil %>
+    </div>
+</div>
+</form>
+
+<div class="article-search-results"></div>
+
+ 
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.article-search').keyup(function(){
+      var q = $(this).val();
+      var c = $('.article-category').val();
+      var l = q.length;
+      if(l > 0) {
+      	$.ajax({
+        url: '<%= search_article_path %>',
+        data: { c, q },
+      });
+      $('.article-search-results').show();	
+      } else {
+      	$('.article-search-results').hide();
+      }
+    });
+
+  });
+</script>

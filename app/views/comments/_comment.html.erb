@@ -1,0 +1,14 @@
+<ul>
+  <li style="display:inline-block">
+  	<img src="https://www.w3schools.com/howto/img_avatar.png" class="img-circle" style="width:20px;">
+    <a href="#"><%= comment.user.name %></a>
+     <%= comment.body %>
+    <% if comment.user.id == current_user.id %>
+		<button class="btn btn-default btn-xs pull-right">
+        <%= link_to 'Delete', [comment.article, comment],
+			method: :delete,
+			data: { confirm: 'Are you sure?' } %>
+	  </button>
+    <% end %>
+  </li>
+</ul>           

@@ -1,0 +1,149 @@
+<div class="container">
+
+<div class="article-filter">
+  <ul>
+    <li>SORT BY:</li>
+    <li id="article_new_sort">New</li>
+    <li id="article_view_sort">Views</li>
+    <li>Date <input type="date" id="article_date_sort"></li>
+  </ul>
+</div>
+
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h4>Category</h4>
+          <ul>
+            <%= form_with model: @category, url: filter_path do |form| %>
+            <% Category.all.each do |category| %>
+            <li><input type="checkbox" name="ids[]" value="<%= category.id %>"> <%= category.name %></li>
+            <% end %>
+            <%= form.submit 'Apply', class: 'btn btn-success btn-xs' %>
+            <%= link_to 'Remove all', articles_path, class: 'btn btn-warning btn-xs' %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6" id="all-articles">
+    <% @articles.each do |article| %>
+      <div class="col-md-12">
+        <div class="post-container thumbnail">
+          <div class="top">
+            <div class="top-left">
+              <img class="img-circle" src="https://www.w3schools.com/howto/img_avatar.png" alt="" style="width:40px">
+            </div>
+            <div class="top-mid">
+              <a href="#"><%= article.user.name %></a><br>
+              <small><%= article.created_at.strftime("%e %b %Y, %I:%M %p") %></small>
+            </div>
+
+             <% if article.user.id == current_user.id %>
+              <div class="dropdown pull-right">
+                <i class="dropbtn fa fa-ellipsis-h fa-2x"></i>
+                <div class="dropdown-content">
+                  <%= link_to 'Edit', edit_article_path(article) %>
+                  <%= link_to 'Delete', article_path(article),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %>
+                </div>
+              </div>
+            <% end %>
+            <br clear="all">
+          </div> 
+          <div class="post-body">
+            <h2 style="font-size: 20px"><%= link_to article.title, article_path(article) %></h2>
+            <p>
+              <%= full_sanitizer = Rails::Html::FullSanitizer.new
+                  truncate_html(full_sanitizer.sanitize(article.text), :length => 225) %>
+            <%# truncate_html(article.text, :length => 225).html_safe %>
+              <% if article.text.length > 255 %>
+                <%= link_to 'read more', article_path(article) %>
+              <% end %>
+            </p>
+          </div>
+          <div class="like-count">
+            <p>
+              <span><%= article.likes.count %> Likes</span> .
+              <span><%= article.comments.count %> Comments</span>
+              <span class="pull-right">Category: <%= link_to article.category.name, category_path(article.category) %></span>
+            </p>
+          </div>
+        </div>
+    </div>
+  <% end %>
+  </div>
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>Top Articles</strong>
+        </div>
+        <div class="panel-body">
+          <% @top_articles.each do |article|%>
+            <% doc = Nokogiri::HTML(article.text)
+            img_srcs = doc.css('img').map{ |i| i['src'] } %>
+            <div class="media">
+              <div class="media-left">
+                <% if img_srcs.count > 0 %>
+                <img src="<%= img_srcs.first %>" class="media-object">
+                <% else %>
+                <img src="https://www.webhosting.uk.com/blog/wp-content/themes/fastblog/images/image-null-blog.png" class="media-object">
+                <% end %>
+              </div>
+              <div class="media-body">
+                <h6 class="media-heading">
+                  <%= link_to truncate(article.title, :length => 60), article_path(article) %> <br>
+                  <small><i class="fa fa-clock-o"></i> <%= article.created_at.strftime("%e %b %Y") %></small>
+                </h6>
+              </div>
+            </div>
+
+            <!-- <div class="trending-articles">
+              <img src="<%= img_srcs.first %>" class="img-responsive">
+              <div class="overlay">
+                <%= link_to article.title, article_path(article), class: 'text' %>
+              </div>
+            </div> -->
+
+            
+          <% end %>
+        </div>
+      </div>
+    </div>
+        
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#article_date_sort').change(function(){
+      var sort_by_date = $(this).val();
+      $.ajax({
+        url: '<%= sort_by_path %>',
+        data: { sort_by_date },
+      });
+    });
+    $('#article_view_sort').click(function(){
+      var sort_by_view = 'view';
+      $.ajax({
+        url: '<%= sort_by_path %>',
+        data: { sort_by_view },
+      });
+    });
+    $('#article_new_sort').click(function(){
+      var sort_by_new = 'new';
+      console.log('hello world');
+      $.ajax({
+        url: '<%= sort_by_path %>',
+        data: { sort_by_new },
+      });
+    });
+  });
+
+</script>
+ 

@@ -1,0 +1,18 @@
+$(function(){
+      
+  var html = '';
+      html += '<% if @articles.count > 0 %>';
+      html += '<ul>'
+      html += '<% @articles.each do |article| %>';
+      html +=  '<li class="table-hover">';
+      html +=  '<%= link_to article.title, article_path(article) %>';
+      html +=  '</li>';
+      html +=  '<% end %>';
+      html +=  '<% else %>';
+      html +=  '<li style="list-style:none;padding:15px;border-bottom:1px solid #ccc;">No article found!</li>';
+      html +=  '</ul>'
+      html +=  '<% end %>';
+
+  $('.article-search-results').html(html);
+
+});

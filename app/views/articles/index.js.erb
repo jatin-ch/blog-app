@@ -1,0 +1,56 @@
+$(function(){
+
+  var html = '';
+      html += '<% if @articles.count > 0 %>';
+      html += '<% @articles.each do |article| %>';
+      html += '<div class="col-md-12">';
+      html += '<div class="post-container thumbnail">';
+      html += '<div class="top">';
+      html += '<div class="top-left">';
+      html += '<img class="img-circle" src="https://www.w3schools.com/howto/img_avatar.png" alt="" style="width:40px">';
+      html += ' </div>';
+      html += '<div class="top-mid">';
+      html += '<a href="#"><%= article.user.name %></a><br>';
+      html += '<small><%= article.created_at.strftime("%e %b %Y, %I:%M %p") %></small>';
+      html += '</div>';
+      html += '<% if article.user.id == current_user.id %>';
+      html += '<div class="dropdown pull-right">';
+      html += '<i class="dropbtn fa fa-ellipsis-h fa-2x"></i>';
+      html += '<div class="dropdown-content">';
+      html += ' <%= link_to "Edit", edit_article_path(article) %>';
+      html += '<%= link_to "Delete", article_path(article), method: :delete, data: { confirm: "Are you sure?" } %>';
+      html += '</div>';
+      html += '</div>';
+      html += '<% end %>';
+      html += ' <br clear="all">';
+      html += '</div> ';
+      html +=  '<div class="post-body">';
+      html +=  '<h2 style="font-size: 20px"><%= link_to article.title, article_path(article) %></h2>';
+      html +=  '<p>';
+      // html +=  '<%= truncate_html(article.text, :length => 225).html_safe %>';
+      html +=  '<% full_sanitizer = Rails::Html::FullSanitizer.new %>';
+      html +=  '<%= truncate_html(full_sanitizer.sanitize(article.text), :length => 225) %>';
+      html +=  '<% if article.text.length > 255 %>';
+      html +=  '<%= link_to "read more", article_path(article) %>';
+      html +=  '<% end %>';
+      html +=  '</p>';
+      html +=  ' </div>';
+      html +=  '<div class="like-count">';
+      html +=  '<p>';
+      html +=  '<span><%= article.likes.count %> Likes</span> .';
+      html +=  '<span><%= article.comments.count %> Comments</span>';
+      html +=  '<span class="pull-right">Category: <%= link_to article.category.name, category_path(article.category) %></span>';
+      html +=  '</p>';
+      html +=  ' </div>';
+      html +=  '</div>';
+      html +=  ' </div>';
+      html +=  '<% end %>';
+      html +=  '<% else %>';
+      html +=  '<p><i class="fa fa-frown-o fa-5x"></i></p>';
+      html +=  '<p>No results found! Please try something else.</p>';
+      html +=  '<%= link_to "<< Back", :back %> ';
+      html +=  '<% end %>';
+
+  $('#all-articles').html(html)
+
+});

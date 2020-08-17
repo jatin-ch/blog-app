@@ -1,0 +1,57 @@
+<div class="post-container thumbnail">
+  <div class="top">
+    <div class="top-left">
+      <img class="img-circle" src="https://www.w3schools.com/howto/img_avatar.png" alt="" style="width:40px">
+    </div>
+    <div class="top-mid">
+      <a href="#"><%= @article.user.name %></a><br>
+      <small><%= @article.created_at %></small>
+    </div>
+
+     <% if @article.user.id == current_user.id %>
+      <div class="dropdown pull-right">
+        <i class="dropbtn fa fa-ellipsis-h fa-2x"></i>
+        <div class="dropdown-content">
+          <%= link_to 'Edit', edit_article_path(@article) %>
+          <%= link_to "Back", :back %>
+        </div>
+      </div>
+    <% end %>
+    <br clear="all">
+  </div> 
+  <div class="post-body">
+    <h2 style="font-size: 20px"><%= @article.title %></h2>
+    <p><%= @article.text.html_safe %></p>
+  </div>
+  <div class="like-count">
+    <p>
+      <span><i class="fa fa-heart-o like"></i></span>
+      <span>50 Likes</span> .
+      <span><%= @article.comments.count %> Comments</span>
+    </p>
+  </div>
+
+  <hr style="margin:5px 0">
+  <% if @article.comments.length > 0 %>
+  <div id="pcb" class="post-comment-box">
+  	<%= render @article.comments %>
+	</div>
+  <% end %>
+
+</div>
+
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+  			   <%= render 'comments/form' %>
+          </div>
+        </div>
+
+
+
+<script type="text/javascript">
+   $(".like").hover(function () {
+    $(this).toggleClass("fa-2x");
+ });
+</script>
+
